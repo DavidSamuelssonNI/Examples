@@ -1,0 +1,3 @@
+C:/Temp/sw_dev/cross-compile/Examples/cross-compile/build/CMakeFiles/main.dir
+C:/Temp/sw_dev/cross-compile/Examples/cross-compile/build/CMakeFiles/edit_cache.dir
+C:/Temp/sw_dev/cross-compile/Examples/cross-compile/build/CMakeFiles/rebuild_cache.dir
