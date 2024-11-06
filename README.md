@@ -1,6 +1,6 @@
-# Examples
+# Example CAN_C_API
 
-Clone the example you want to look at, each has its own branch.
+NI original Examples could be found:  
+> C:\Users\Public\Documents\National Instruments\NI-XNET\Examples  
 
-for example, for cross_compile example:  
-```git clone --branch cross_compile https://github.com/DavidSamuelssonNI/Examples.git```
+
