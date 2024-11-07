@@ -19,4 +19,8 @@ extern char *l_pSelectedCluster;
 extern char *l_pSelectedSignalList;
 extern f64 l_ValueBuffer[NUM_SIGNALS];
 
+extern void DisplayErrorAndExit(nxStatus_t Status, char *Source);
+extern void PrintSessionInfo();
+extern nxSessionRef_t* CreateSession(nxMode_t nxMode);
+
 #endif /* F3DCA39F_BFA3_43E9_8D61_8F9582A30DFF */
