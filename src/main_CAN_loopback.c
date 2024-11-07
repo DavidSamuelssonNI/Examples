@@ -64,10 +64,7 @@ void* CanSingleSignalIn(void* arg) {
     nxStatus_t l_Status = 0;
     nxTimestamp_t l_TimestampBuffer[NUM_SIGNALS];
     f64 l_ValueBuffer[NUM_SIGNALS];
-    // char *l_pSelectedInterface = "CAN2";
-    // l_Status = nxCreateSession(l_pSelectedDatabase, l_pSelectedCluster,
-    // l_pSelectedSignalList, l_pSelectedInterface, nxMode_SignalInSinglePoint,
-    // &can_single_in_session);
+
     if (nxSuccess == l_Status)
     {
         printf("Session created successfully.\n");
@@ -76,17 +73,12 @@ void* CanSingleSignalIn(void* arg) {
     {
         DisplayErrorAndExit(l_Status, "nxCreateSession", *can_single_in_session);
     }
-    // l_Status = nxStart(*can_single_in_session, nxStartStop_Normal);
-    // if (nxSuccess == l_Status) {
-    //     printf("Read Session started successfully!\n");
-    // } else {
-    //     DisplayErrorAndExit(l_Status, "nxStart");
-    // }
+
 
     while (1) {
-        pthread_mutex_lock(&mutex);
-        pthread_cond_wait(&cond, &mutex);  // Wait for signal from writer
-        pthread_mutex_unlock(&mutex);
+        // pthread_mutex_lock(&mutex);
+        // pthread_cond_wait(&cond, &mutex);  // Wait for signal from writer
+        // pthread_mutex_unlock(&mutex);
 
         // Attempt to read signals
         l_Status = nxReadSignalSinglePoint(*can_single_in_session, l_ValueBuffer,
@@ -98,6 +90,7 @@ void* CanSingleSignalIn(void* arg) {
         } else {
             DisplayErrorAndExit(l_Status, "nxReadSignalSinglePoint", *can_single_in_session);
         }
+        usleep(1000000);
     }
 
     // Clear the XNET session
@@ -131,11 +124,11 @@ int main() {
         return 1;
     }
 
-    // Create the writer thread
-    if (pthread_create(&can_out_thread, NULL, CanSingleSignalOut, NULL) != 0) {
-        perror("Failed to create write thread");
-        return 1;
-    }
+    // // Create the writer thread
+    // if (pthread_create(&can_out_thread, NULL, CanSingleSignalOut, NULL) != 0) {
+    //     perror("Failed to create write thread");
+    //     return 1;
+    // }
 
     // Wait for both threads to signal completion
     pthread_mutex_lock(&mutex);
