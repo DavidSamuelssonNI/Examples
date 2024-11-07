@@ -8,7 +8,17 @@ set(SOURCES
     src/session.c
     src/can_signal_single_point_out.c
 )
-set(NIXNET_LIB "C:/Temp/sw_dev/Examples/lib/libnixnet.so")
+# move into C:\build\2024Q4\x64\sysroots\core2-64-nilrt-linux\usr\lib\ and automatically take from cmake file?
+#or add all libs here?
+set(NIXNET_LIB 
+    ${CAN_C_API_Example_SOURCE_DIR}/lib/libnixnet.so
+    ${CAN_C_API_Example_SOURCE_DIR}/lib/libnixnetDB.so.1
+    ${CAN_C_API_Example_SOURCE_DIR}/lib/libnixntdm.so.1
+    ${CAN_C_API_Example_SOURCE_DIR}/lib/libnixnthc.so.2
+    ${CAN_C_API_Example_SOURCE_DIR}/lib/libnixntpi.so.1
+    ${CAN_C_API_Example_SOURCE_DIR}/lib/libnixnttcpip.so.23
+    ${CAN_C_API_Example_SOURCE_DIR}/lib/libxnetTrace.so.1
+    ) 
 
 # Define executable
 add_executable(${PROJECT_NAME} ${SOURCES})
