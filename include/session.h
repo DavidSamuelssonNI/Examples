@@ -13,14 +13,17 @@ typedef unsigned int nxMode_t;
 
 // Declare all variables for the function
 extern unsigned int i;
+// extern char *l_pSelectedInterface_out;
+// extern char *l_pSelectedInterface_in;
 extern char *l_pSelectedInterface;
+extern char *l_pSelectedDatabase;
 extern char *l_pSelectedDatabase;
 extern char *l_pSelectedCluster;
 extern char *l_pSelectedSignalList;
 extern f64 l_ValueBuffer[NUM_SIGNALS];
 
-extern void DisplayErrorAndExit(nxStatus_t Status, char *Source);
-extern void PrintSessionInfo();
-extern nxSessionRef_t* CreateSession(nxMode_t nxMode);
+extern void DisplayErrorAndExit(nxStatus_t Status, char *Source, nxSessionRef_t m_SessionRef);
+// extern void PrintSessionInfo();
+extern nxSessionRef_t* CreateSession(nxMode_t nxMode, char *l_pSelectedInterface);
 
 #endif /* F3DCA39F_BFA3_43E9_8D61_8F9582A30DFF */
