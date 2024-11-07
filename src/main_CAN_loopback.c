@@ -15,6 +15,7 @@ void* CanSingleSignalOut(void* arg) {
     printf("Press any key to transmit new signal values or q to quit\n");
     unsigned int i = 0;
     f64 l_ValueBuffer[NUM_SIGNALS];
+    u32 l_nxFrmCANTimingType = nxFrmCANTiming_EventData ;
 
     while ('q' != tolower(_getch())) {
         l_ValueBuffer[0] = (f64)i;
@@ -124,11 +125,11 @@ int main() {
         return 1;
     }
 
-    // // Create the writer thread
-    // if (pthread_create(&can_out_thread, NULL, CanSingleSignalOut, NULL) != 0) {
-    //     perror("Failed to create write thread");
-    //     return 1;
-    // }
+    // Create the writer thread
+    if (pthread_create(&can_out_thread, NULL, CanSingleSignalOut, NULL) != 0) {
+        perror("Failed to create write thread");
+        return 1;
+    }
 
     // Wait for both threads to signal completion
     pthread_mutex_lock(&mutex);
