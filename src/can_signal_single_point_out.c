@@ -20,6 +20,21 @@ void PrintSessionInfo(){
       l_pSelectedInterface, l_pSelectedDatabase, l_pSelectedSignalList);
 }
 
+void DisplayErrorAndExit(nxStatus_t Status, char *Source)
+{
+   char l_StatusString[1024];
+   nxStatusToString(Status, sizeof(l_StatusString), l_StatusString);
+
+   printf("\n\nERROR at %s!\n%s\n", Source, l_StatusString);
+   printf("\nExecution stopped.\nPress any key to quit\n");
+
+   nxClear(m_SessionRef);
+
+   _getch();
+   exit(1);
+}
+
+
 nxSessionRef_t* CreateSession(nxMode_t nxMode){
     nxStatus_t l_Status = 0;
     // Create an XNET session in SignalOutSinglePoint mode
@@ -37,22 +52,3 @@ nxSessionRef_t* CreateSession(nxMode_t nxMode){
     return &m_SessionRef;
 }
 
-//=============================================================================
-// Functions
-//=============================================================================
-
-// void DisplayErrorAndExit(nxStatus_t Status, char *Source)
-// {
-//    char l_StatusString[1024];
-//    nxStatusToString(Status, sizeof(l_StatusString), l_StatusString);
-
-//    printf("\n\nERROR at %s!\n%s\n", Source, l_StatusString);
-//    printf("\nExecution stopped.\nPress any key to quit\n");
-
-//    nxClear(m_SessionRef);
-
-//    _getch();
-//    exit(1);
-// }
-
-// //=============================================================================

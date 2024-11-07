@@ -1,7 +1,9 @@
 project(CAN_C_API_Example)
 cmake_minimum_required(VERSION 3.20)
 set(SOURCES 
-    src/CAN_Signal_Single_Point_Output.c
+    src/main_CAN_loopback.c
+    src/session.c
+    src/can_signal_single_point_out.c
     )
 
 
