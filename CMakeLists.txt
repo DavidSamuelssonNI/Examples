@@ -3,9 +3,12 @@ include(toolchain.cmake)
 project(CAN_C_API_Example)
 
 # Set sources and library
-set(SOURCES 
-    src/main_CAN_loopback.c
-    src/session.c
+set(SOURCES
+    src/main.cpp
+    src/CAN_Input.cpp
+    src/CAN_Output.cpp
+    # src/main_CAN_loopback.c
+    # src/session.c
     # src/can_signal_single_point_out.c
 )
 # move into C:\build\2024Q4\x64\sysroots\core2-64-nilrt-linux\usr\lib\ and automatically take from cmake file?
@@ -29,9 +32,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CAN_C_API_Example_SOURCE_DI
 # Link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE ${NIXNET_LIB} pthread)
 
-# Add custom command to run scp after build
+# Copy built executable to remote server (PXI)
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND scp $<TARGET_FILE:${PROJECT_NAME}> admin@192.168.0.3:/home/Temp
+    COMMAND scp -C $<TARGET_FILE:${PROJECT_NAME}> admin@192.168.0.3:/home/Temp
     COMMENT "Copying executable to remote server"
 )
 
