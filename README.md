@@ -48,14 +48,5 @@ using gnuplot
 
 opkg install gnuplot  
 
-write:  
-gnuplot  
-in gnuplot:  
- - set terminal dumb  
- - set title "Plot of First Column vs Row Number"  
- - set xlabel "Sample Index"  
- - set ylabel "Column 1 Value"  
- - plot 'plot.txt' using ($0+1):1 with linespoints title "Column 1"  
-
-or:  
 ./CAN_C_API_Example | gnuplot -persist -e "set terminal dumb; plot '-' using 0:2 with linespoints title 'Column 1 vs Column 2'"  
+Press enter  
