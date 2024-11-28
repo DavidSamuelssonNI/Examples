@@ -21,6 +21,7 @@ set(NIXNET_LIB
     ${CAN_C_API_Example_SOURCE_DIR}/lib/libnixntpi.so.1
     # ${CAN_C_API_Example_SOURCE_DIR}/lib/libnixnttcpip.so.23
     ${CAN_C_API_Example_SOURCE_DIR}/lib/libxnetTrace.so.1
+    ${CAN_C_API_Example_SOURCE_DIR}/lib/libmymodel.so
     ) 
 
 # Define executable

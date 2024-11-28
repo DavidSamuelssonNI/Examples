@@ -1,5 +1,6 @@
 #include "CAN_Output.h"
 #include "getch.h"
+
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -8,6 +9,8 @@
 CANSignalSinglePointOutput::CANSignalSinglePointOutput(const std::string& interface, const std::string& database, const std::string& cluster, const std::vector<std::string>& signals)
     : sessionRef(0), selectedInterface(interface), selectedDatabase(database), selectedCluster(cluster), selectedSignalList(signals), valueBuffer(signals.size()) {
     value_ = 0;
+    MyModel my_model = MyModel();
+    frequency_ = 10;
     createOutputSession();
 }
 
@@ -23,7 +26,7 @@ void CANSignalSinglePointOutput::createOutputSession() {
 
     nxStatus_t status = nxCreateSession(selectedDatabase.c_str(), selectedCluster.c_str(), signalList.c_str(), selectedInterface.c_str(), nxMode_SignalOutSinglePoint, &sessionRef);
     if (status == nxSuccess) {
-        std::cout << "Session created successfully." << std::endl;
+        //std::cout << "Session created successfully." << std::endl;
     } else {
         displayErrorAndExit(status, "nxCreateSession");
     }
@@ -42,10 +45,15 @@ void CANSignalSinglePointOutput::clearSession() {
 void CANSignalSinglePointOutput::run() {
 
     // value_ = 0;
-
+        
+        auto now = std::chrono::high_resolution_clock::now();
+        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
+        int timeInMs = static_cast<int>(ms);
         valueBuffer[0] = static_cast<f64>(value_);
-        valueBuffer[1] = static_cast<f64>(value_ * 10);
-
+        //valueBuffer[1] = static_cast<f64>(value_ * 10);
+        int model_value = my_model.output(timeInMs, frequency_); 
+        valueBuffer[1] = static_cast<f64>(model_value);
+        //std::cout << "Out: " << value_ << std::endl;
         nxStatus_t status = nxWriteSignalSinglePoint(sessionRef, valueBuffer.data(), valueBuffer.size() * sizeof(f64));
         if (status == nxSuccess) {
 
@@ -57,7 +65,7 @@ void CANSignalSinglePointOutput::run() {
         } else {
             displayErrorAndExit(status, "nxWriteSignalSinglePoint");
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 
 void CANSignalSinglePointOutput::displayErrorAndExit(nxStatus_t status, const std::string& source) {

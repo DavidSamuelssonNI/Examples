@@ -18,6 +18,7 @@ void runOutput(CANSignalSinglePointOutput& bpa) {
             inputDone = false;
         }
 
+        // std::cout << "Running output..." << std::endl;
         bpa.run(); // Perform output task
 
         {
@@ -40,10 +41,13 @@ void runInput(CANSignalSinglePointInput& apa) {
         {
             std::unique_lock<std::mutex> lock(mtx);
             cv.wait(lock, [] { return outputDone; });
+            outputDone = false; // Reset outputDone flag, else input runs twice
         }
 
+        // std::cout << "Running input..." << std::endl;
         apa.run(); // Perform input task
 
+        // After input is done, notify output thread
         {
             std::unique_lock<std::mutex> lock(mtx);
             inputDone = true;
@@ -60,8 +64,8 @@ int main() {
 
     std::thread outputThread(runOutput, std::ref(bpa));
     std::thread inputThread(runInput, std::ref(apa));
-    outputThread.join();
-    inputThread.join();
+    outputThread.detach();
+    inputThread.detach();
 
     std::cin.get();
 

@@ -38,8 +38,7 @@ in gnuplot:
  - set title "Plot of First Column vs Row Number"  
  - set xlabel "Sample Index"  
  - set ylabel "Column 1 Value"  
- - plot 'data.txt' using ($0+1):1 with linespoints title "Column 1"  
+ - plot 'plot.txt' using ($0+1):1 with linespoints title "Column 1"  
 
-Or:  
-
-./CAN_C_API_Example | gnuplot -persist -e "set terminal sixelgd; plot '-' using ($0+1):1 with linespoints title 'Column 1 vs Row Number'"
+or:  
+./CAN_C_API_Example | gnuplot -persist -e "set terminal dumb; plot '-' using 0:2 with linespoints title 'Column 1 vs Column 2'"  

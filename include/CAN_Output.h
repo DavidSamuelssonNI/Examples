@@ -4,7 +4,7 @@
 #include <nixnet.h>
 #include <string>
 #include <vector>
-
+#include "mymodel.h"
 
 class CANSignalSinglePointOutput {
 public:
@@ -22,6 +22,8 @@ private:
     std::vector<std::string> selectedSignalList;
     std::vector<f64> valueBuffer;
     int value_;
+    int frequency_;
+    MyModel my_model;
 
     void createOutputSession();
     void clearSession();

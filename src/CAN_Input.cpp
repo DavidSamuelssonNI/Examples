@@ -22,7 +22,7 @@ void CANSignalSinglePointInput::createInputSession() {
 
     nxStatus_t status = nxCreateSession(selectedDatabase.c_str(), selectedCluster.c_str(), signalList.c_str(), selectedInterface.c_str(), nxMode_SignalInSinglePoint, &sessionRef);
     if (status == nxSuccess) {
-        std::cout << "Session created successfully." << std::endl;
+        //std::cout << "Session created successfully." << std::endl;
     } else {
         displayErrorAndExit(status, "nxCreateSession");
     }
@@ -42,12 +42,12 @@ void CANSignalSinglePointInput::run() {
         nxStatus_t status = nxReadSignalSinglePoint(sessionRef, valueBuffer.data(), valueBuffer.size() * sizeof(f64), timestampBuffer.data(), timestampBuffer.size() * sizeof(nxTimestamp_t));
         if (status == nxSuccess) {
 
-            std::cout <<  valueBuffer[0] << " "<< valueBuffer[1] <<std::endl;
-            std::cout << std::endl;
+            //std::cout << "In "<<  valueBuffer[0] << " "<< valueBuffer[1] <<std::endl;
+            std::cout << valueBuffer[0] << " "<< valueBuffer[1] <<std::endl;
         } else {
             displayErrorAndExit(status, "nxReadSignalSinglePoint");
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
 
 }
 
