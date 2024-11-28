@@ -29,5 +29,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CAN_C_API_Example_SOURCE_DI
 # Link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE ${NIXNET_LIB} pthread)
 
+# Add custom command to run scp after build
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND scp $<TARGET_FILE:${PROJECT_NAME}> admin@192.168.0.3:/home/Temp
+    COMMENT "Copying executable to remote server"
+)
 
 # cmake -G "Ninja" .. ; cmake --build .
