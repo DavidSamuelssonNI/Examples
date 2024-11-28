@@ -1,4 +1,21 @@
-# Example CAN_C_API
+# CAN_C_API Can loop back example  
+
+## Build (CrossComp from Win to Linux)  
+![alt text](image.png)
+
+```mkdir -p build```
+```cd build```  
+
+edit or uncomment CMakeLists.txt:
+```
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD  
+    COMMAND scp -C $<TARGET_FILE:${PROJECT_NAME}> admin@192.168.0.3:/home/Temp  
+    COMMENT "Copying executable to remote server"  
+)
+```
+```cmake -G "Ninja".. && cmake --build .```  
+
+## Useful to know (see main branch)
 
 NI original Examples could be found:  
 > C:\Users\Public\Documents\National Instruments\NI-XNET\Examples  
