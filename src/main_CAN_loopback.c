@@ -16,7 +16,7 @@ void* CanSingleSignalOut(void* arg) {
     unsigned int i = 0;
     f64 l_ValueBuffer[NUM_SIGNALS];
     u32 l_nxFrmCANTimingType = nxFrmCANTiming_EventData ;
-
+//l_Status = nxSetProperty(*can_single_out_session, nxPropFrm_CANTimingType, sizeof(l_nxFrmCANTimingType), &l_nxFrmCANTimingType);
     while ('q' != tolower(_getch())) {
         l_ValueBuffer[0] = (f64)i;
         l_ValueBuffer[1] = (f64)(i * 10);
