@@ -21,3 +21,25 @@ OBS! Added files to C:\build\2024Q4\x64\sysroots\core2-64-nilrt-linux\usr\lib\ f
     ${CAN_C_API_Example_SOURCE_DIR}/lib/libnixntpi.so.1  
     ${CAN_C_API_Example_SOURCE_DIR}/lib/libnixnttcpip.so.23  
     ${CAN_C_API_Example_SOURCE_DIR}/lib/libxnetTrace.so.1  
+
+
+## Plotting:  
+
+./CAN_C_API_Example > plot.txt  
+
+using gnuplot  
+
+opkg install gnuplot  
+
+write:  
+gnuplot  
+in gnuplot:  
+ - set terminal dumb  
+ - set title "Plot of First Column vs Row Number"  
+ - set xlabel "Sample Index"  
+ - set ylabel "Column 1 Value"  
+ - plot 'data.txt' using ($0+1):1 with linespoints title "Column 1"  
+
+Or:  
+
+./CAN_C_API_Example | gnuplot -persist -e "set terminal sixelgd; plot '-' using ($0+1):1 with linespoints title 'Column 1 vs Row Number'"

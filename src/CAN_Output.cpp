@@ -1,10 +1,13 @@
 #include "CAN_Output.h"
 #include "getch.h"
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <ctype.h>
 
 CANSignalSinglePointOutput::CANSignalSinglePointOutput(const std::string& interface, const std::string& database, const std::string& cluster, const std::vector<std::string>& signals)
     : sessionRef(0), selectedInterface(interface), selectedDatabase(database), selectedCluster(cluster), selectedSignalList(signals), valueBuffer(signals.size()) {
+    value_ = 0;
     createOutputSession();
 }
 
@@ -33,30 +36,28 @@ void CANSignalSinglePointOutput::clearSession() {
     } else {
         displayErrorAndExit(status, "nxClear");
     }
+    
 }
 
 void CANSignalSinglePointOutput::run() {
-    //unsigned int i = 0;
-    std::cout << "Press any key to transmit new signal values or q to quit" << std::endl;
-    value_ = 0;
-    while (1) {
+
+    // value_ = 0;
+
         valueBuffer[0] = static_cast<f64>(value_);
         valueBuffer[1] = static_cast<f64>(value_ * 10);
 
         nxStatus_t status = nxWriteSignalSinglePoint(sessionRef, valueBuffer.data(), valueBuffer.size() * sizeof(f64));
         if (status == nxSuccess) {
-            std::cout << "Signals sent:" << std::endl;
-            for (size_t j = 0; j < valueBuffer.size(); ++j) {
-                std::cout << "Signal " << j + 1 << ": " << valueBuffer[j] << std::endl;
-            }
-            std::cout << std::endl;
+
+            std::cout <<  valueBuffer[0] << " "<< valueBuffer[1] <<std::endl;
+
             if (++value_ > 10) {
                 value_ = 0;
             }
         } else {
             displayErrorAndExit(status, "nxWriteSignalSinglePoint");
         }
-    }
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
 void CANSignalSinglePointOutput::displayErrorAndExit(nxStatus_t status, const std::string& source) {

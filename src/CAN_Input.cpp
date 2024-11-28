@@ -1,6 +1,8 @@
 #include "CAN_Input.h"
 #include "getch.h"
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <ctype.h>
 
 CANSignalSinglePointInput::CANSignalSinglePointInput(const std::string& interface, const std::string& database, const std::string& cluster, const std::vector<std::string>& signals)
@@ -36,20 +38,17 @@ void CANSignalSinglePointInput::clearSession() {
 }
 
 void CANSignalSinglePointInput::run() {
-    // std::cout << "Press any key to read the latest signal values or q to quit" << std::endl;
 
-    while (1) {
         nxStatus_t status = nxReadSignalSinglePoint(sessionRef, valueBuffer.data(), valueBuffer.size() * sizeof(f64), timestampBuffer.data(), timestampBuffer.size() * sizeof(nxTimestamp_t));
         if (status == nxSuccess) {
-            std::cout << "Signals received:" << std::endl;
-            for (size_t i = 0; i < valueBuffer.size(); ++i) {
-                std::cout << "Signal " << i + 1 << ": " << valueBuffer[i] << std::endl;
-            }
+
+            std::cout <<  valueBuffer[0] << " "<< valueBuffer[1] <<std::endl;
             std::cout << std::endl;
         } else {
             displayErrorAndExit(status, "nxReadSignalSinglePoint");
         }
-    }
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
 }
 
 void CANSignalSinglePointInput::displayErrorAndExit(nxStatus_t status, const std::string& source) {
