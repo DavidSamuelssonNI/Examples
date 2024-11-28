@@ -56,13 +56,12 @@ void runInput(CANSignalSinglePointInput& apa) {
     }
 }
 
-
 int main() {
     CANSignalSinglePointInput can_input_listener =  CANSignalSinglePointInput("CAN2", "NIXNET_example", "CAN_Cluster", {"CANEventSignal1", "CANEventSignal2"});
     CANSignalSinglePointOutput can_output = CANSignalSinglePointOutput("CAN1", "NIXNET_example", "CAN_Cluster", {"CANEventSignal1", "CANEventSignal2"});
 
 
-    std::thread outputThread(runOutput, std::ref(can_output));
+    std::thread outputThread(runOutput, std::ref(can_output)); 
     std::thread inputThread(runInput, std::ref(can_input_listener));
     
     outputThread.detach();
