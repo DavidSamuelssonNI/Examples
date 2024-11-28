@@ -1,9 +1,8 @@
 # Examples
 
-Branches:  
-1. **main**, describing the prerequisites and how to cross compile into NILinuxRT  
-2. **CAN_C_API**, Showing a CAN loopback example (Obs the build automatically copies the file to ip address, please change)  
-3. **Build_Veristand_Cpp_Model**, to build model for NI's HIL software Veristand  
+1. main: Describes the prerequisites and how to cross-compile into NILinuxRT.
+2. CAN_C_API: Shows a CAN loopback example. (Note: The build automatically copies the file to the IP address; please update this as needed.)
+3. Build_Veristand_Cpp_Model: Builds a model for NI's HIL software, Veristand.
 
 
 for example, for the cross compile example:  
