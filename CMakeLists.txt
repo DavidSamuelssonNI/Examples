@@ -7,9 +7,6 @@ set(SOURCES
     src/main.cpp
     src/CAN_Input.cpp
     src/CAN_Output.cpp
-    # src/main_CAN_loopback.c
-    # src/session.c
-    # src/can_signal_single_point_out.c
 )
 # move into C:\build\2024Q4\x64\sysroots\core2-64-nilrt-linux\usr\lib\ and automatically take from cmake file?
 #or add all libs here?
